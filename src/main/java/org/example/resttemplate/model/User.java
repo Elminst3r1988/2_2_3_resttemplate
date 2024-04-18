@@ -14,8 +14,6 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Car car;
-
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }
