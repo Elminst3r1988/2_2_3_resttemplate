@@ -1,6 +1,8 @@
-package org.example.resttemplate.services;
+package org.example.resttemplate.service;
 
 import org.example.resttemplate.dto.UserIncomeDTO;
+import org.example.resttemplate.properties.LoanProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -12,21 +14,24 @@ import java.util.List;
 @Service
 public class IncomeService {
 
-    public List<UserIncomeDTO> getUserIncomes() {
-        RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
+    private final LoanProperties loanProperties;
+    @Autowired
+    public IncomeService(RestTemplate restTemplate, LoanProperties loanProperties) {
+        this.restTemplate = restTemplate;
+        this.loanProperties = loanProperties;
+    }
 
-        String url = "https://66055cd12ca9478ea1801f2e.mockapi.io/api/users/income";
+    private List<UserIncomeDTO> getUserIncomes() {
 
         ResponseEntity<List<UserIncomeDTO>> responseEntity = restTemplate.exchange(
-                url,
+                loanProperties.getIncomeURL(),
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<UserIncomeDTO>>() {}
+                new ParameterizedTypeReference<>() {}
         );
 
-        List<UserIncomeDTO> userIncomeDTOS = responseEntity.getBody();
-
-        return userIncomeDTOS;
+        return responseEntity.getBody();
     }
 
     public int getUserIncomeById(Long id) {

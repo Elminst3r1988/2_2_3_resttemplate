@@ -1,6 +1,6 @@
-package org.example.resttemplate.controllers;
+package org.example.resttemplate.controller;
 
-import org.example.resttemplate.services.LoanCalculatorService;
+import org.example.resttemplate.service.LoanCalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

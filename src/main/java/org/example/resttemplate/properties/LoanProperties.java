@@ -2,14 +2,21 @@ package org.example.resttemplate.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.math.BigDecimal;
-
 @ConfigurationProperties(prefix = "loan")
 public class LoanProperties {
     private int minimalIncome;
     private int minimalCarPrice;
     private int yearIncomeCoef;
     private Double maxPercentCarPrice;
+    private String incomeURL;
+
+    public String getIncomeURL() {
+        return incomeURL;
+    }
+
+    public void setIncomeURL(String incomeURL) {
+        this.incomeURL = incomeURL;
+    }
 
     public int getMinimalIncome() {
         return minimalIncome;

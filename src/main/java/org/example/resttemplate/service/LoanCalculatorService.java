@@ -1,9 +1,9 @@
-package org.example.resttemplate.services;
+package org.example.resttemplate.service;
 
 
-import org.example.resttemplate.dao.UserDao;
 import org.example.resttemplate.model.User;
 import org.example.resttemplate.properties.LoanProperties;
+import org.example.resttemplate.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +14,13 @@ public class LoanCalculatorService {
     @Autowired
     private IncomeService incomeService;
     @Autowired
-    private UserDao userDao;
+    private UserRepository userRepository;
 
-    public Double acceptLoan(Long user_id) {
-        User user = userDao.getUserById(user_id);
-        if (user.getCar().getPrice() >= loanProperties.getMinimalCarPrice() || incomeService.getUserIncomeById(user_id) > loanProperties.getMinimalIncome()) {
+    public Double acceptLoan(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user.getCar().getPrice() >= loanProperties.getMinimalCarPrice() || incomeService.getUserIncomeById(userId) > loanProperties.getMinimalIncome()) {
             double carLoanAmount = user.getCar().getPrice() * loanProperties.getMaxPercentCarPrice();
-            double incomeLoanAmount = incomeService.getUserIncomeById(user_id) * loanProperties.getYearIncomeCoef();
+            double incomeLoanAmount = incomeService.getUserIncomeById(userId) * loanProperties.getYearIncomeCoef();
 
             return Math.max(carLoanAmount, incomeLoanAmount);
         }
