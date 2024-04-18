@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: resttemplate
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: 123456
+    url: jdbc:postgresql://localhost:5432/Test
+    username: postgres
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: create
+        show_sql: true
+
+loan:
+  minimalIncome: 40000
+  minimalCarPrice: 1000000
+  yearIncomeCoef: 6
+  maxPercentCarPrice: 0.3
