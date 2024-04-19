@@ -22,6 +22,15 @@ public class IncomeService {
         this.loanProperties = loanProperties;
     }
 
+    public int getUserIncomeById(Long id) {
+        for (UserIncomeDTO income : getUserIncomes()) {
+            if (income.getId() == id) {
+                return income.getIncome();
+            }
+        }
+        return 0;
+    }
+
     private List<UserIncomeDTO> getUserIncomes() {
 
         ResponseEntity<List<UserIncomeDTO>> responseEntity = restTemplate.exchange(
@@ -32,14 +41,5 @@ public class IncomeService {
         );
 
         return responseEntity.getBody();
-    }
-
-    public int getUserIncomeById(Long id) {
-        for (UserIncomeDTO income : getUserIncomes()) {
-            if (income.getId() == id) {
-                return income.getIncome();
-            }
-        }
-        return 0;
     }
 }

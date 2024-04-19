@@ -18,13 +18,19 @@ public class LoanCalculatorService {
 
     public Double acceptLoan(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
-        if (user.getCar().getPrice() >= loanProperties.getMinimalCarPrice() || incomeService.getUserIncomeById(userId) > loanProperties.getMinimalIncome()) {
-            double carLoanAmount = user.getCar().getPrice() * loanProperties.getMaxPercentCarPrice();
-            double incomeLoanAmount = incomeService.getUserIncomeById(userId) * loanProperties.getYearIncomeCoef();
 
+        double carPrice = user.getCar().getPrice();
+        double minCarPrice = loanProperties.getMinimalCarPrice();
+        int userIncome = incomeService.getUserIncomeById(userId);
+        int minIncome = loanProperties.getMinimalIncome();
+        double carLoanCoef = loanProperties.getMaxPercentCarPrice();
+        int incomeCoef = loanProperties.getYearIncomeCoef();
+
+        if (carPrice >= minCarPrice || userIncome >= minIncome) {
+            double carLoanAmount = carPrice * carLoanCoef;
+            double incomeLoanAmount = userIncome * incomeCoef;
             return Math.max(carLoanAmount, incomeLoanAmount);
         }
-
         return 0.0;
     }
 }
