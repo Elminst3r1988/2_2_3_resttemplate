@@ -32,11 +32,14 @@ public class DataLoad {
             user.setLastName("LastName" + i);
             userRepository.save(user);
 
-            Car car = new Car();
-            car.setModel("Model" + i);
-            car.setPrice(Math.round(random.nextDouble() * 2500000));
-            car.setUser(user);
-            carRepository.save(car);
+            // Вероятность добавления машины к пользователю - 50%
+            if (random.nextBoolean()) {
+                Car car = new Car();
+                car.setModel("Model" + i);
+                car.setPrice(Math.round(random.nextDouble() * 2500000));
+                car.setUser(user);
+                carRepository.save(car);
+            }
         }
     }
 }
