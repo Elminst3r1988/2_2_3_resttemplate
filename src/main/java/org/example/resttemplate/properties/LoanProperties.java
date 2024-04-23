@@ -10,6 +10,4 @@ public class LoanProperties {
     private int minimalCarPrice;
     private int yearIncomeCoef;
     private Double maxPercentCarPrice;
-    private String incomeURL;
-
 }
